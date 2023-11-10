@@ -78,6 +78,23 @@ def random_mask(im_shape, ratio=1, mask_full_image=False):
 
     return mask
 
+def my_random_mask(im_shape, percent=100):
+    # Create a new black mask (initially transparent)
+    mask = Image.new("L", im_shape, 0)
+
+    # Calculate the total number of pixels to mask
+    total_pixels = im_shape[0] * im_shape[1]
+    pixels_to_mask = total_pixels * percent // 100
+
+    # Randomly select pixels to mask
+    for _ in range(pixels_to_mask):
+        x = random.randint(0, im_shape[0] - 1)
+        y = random.randint(0, im_shape[1] - 1)
+        mask.putpixel((x, y), 255)  # Set the pixel to white (masked)
+
+    return mask
+
+
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Simple example of a training script.")
@@ -460,7 +477,7 @@ def main():
                 transform_to_pil = transforms.ToPILImage()
                 fake_pil_images = transform_to_pil(fake_images)
 
-                fake_mask = random_mask((args.resolution, args.resolution), ratio=1, mask_full_image=True)
+                fake_mask = my_random_mask((args.resolution, args.resolution), percentage=100)#ratio=1, mask_full_image=True)
 
                 images = pipeline(prompt=example["prompt"], mask_image=fake_mask, image=fake_pil_images).images
 
@@ -560,7 +577,7 @@ def main():
         for example in examples:
             pil_image = example["PIL_images"]
             # generate a random mask
-            mask = random_mask(pil_image.size, 1, False)
+            mask = my_random_mask(pil_image.size, pourcentage=0.25)#1, False)
             # prepare mask and masked image
             mask, masked_image = prepare_mask_and_masked_image(pil_image, mask)
 
@@ -570,7 +587,7 @@ def main():
         if args.with_prior_preservation:
             for pil_image in pior_pil:
                 # generate a random mask
-                mask = random_mask(pil_image.size, 1, False)
+                mask = my_random_mask(pil_image.size, pourcentage=0.25)#1, False)
                 # prepare mask and masked image
                 mask, masked_image = prepare_mask_and_masked_image(pil_image, mask)
 
