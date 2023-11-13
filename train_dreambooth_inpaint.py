@@ -78,13 +78,13 @@ def random_mask(im_shape, ratio=1, mask_full_image=False):
 
     return mask
 
-def my_random_mask(im_shape, percent=100):
+def my_random_mask(im_shape, pourcentage=100):
     # Create a new black mask (initially transparent)
     mask = Image.new("L", im_shape, 0)
 
     # Calculate the total number of pixels to mask
     total_pixels = im_shape[0] * im_shape[1]
-    pixels_to_mask = total_pixels * percent // 100
+    pixels_to_mask = int(total_pixels * pourcentage // 100)
 
     # Randomly select pixels to mask
     for _ in range(pixels_to_mask):

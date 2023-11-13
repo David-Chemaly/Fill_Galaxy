@@ -1,6 +1,6 @@
 accelerate launch train_dreambooth_inpaint.py \
   --pretrained_model_name_or_path="runwayml/stable-diffusion-inpainting"  \
-  --instance_data_dir="/Users/davidchemaly/Data/DSS2_Survey/A3D_Catalogue/fov10Re" \
+  --instance_data_dir="/Users/davidchemaly/Documents/Cambridge/PhD_Projects/Galaxy_InPainter/PNG_use" \
   --output_dir="/Users/davidchemaly/Weights/StableDiffusionInPainter" \
   --instance_prompt="galaxy" \
   --resolution=512 \
